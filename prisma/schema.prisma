@@ -1,0 +1,67 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  ATTENDANT
+  SELLER
+  ADMIN
+}
+
+enum Channel {
+  CALL
+  EMAIL
+  WHATSAPP
+  MEETING
+  OTHER
+}
+
+enum AttendanceStatus {
+  OPEN
+  CLOSED
+}
+
+model User {
+  id           String   @id @default(uuid())
+  name         String
+  email        String   @unique
+  passwordHash String
+  role         Role     @default(ATTENDANT)
+  customers    Customer[] @relation("UserCustomers")
+    active           Boolean     @default(true) 
+  attendances  Attendance[]
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model Customer {
+  id              String       @id @default(uuid())
+  name            String
+  email           String?
+  phone           String?
+  document        String?      @unique
+   active           Boolean     @default(true) 
+  createdByUserId String
+  createdBy       User         @relation("UserCustomers", fields: [createdByUserId], references: [id])
+  attendances     Attendance[]
+  createdAt       DateTime     @default(now())
+  updatedAt       DateTime     @updatedAt
+}
+
+model Attendance {
+  id          String           @id @default(uuid())
+  customerId  String
+  customer    Customer         @relation(fields: [customerId], references: [id])
+  userId      String
+  user        User             @relation(fields: [userId], references: [id])
+  channel     Channel
+  subject     String
+  notes       String
+  status      AttendanceStatus @default(OPEN)
+  createdAt   DateTime         @default(now())
+}
