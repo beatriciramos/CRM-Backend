@@ -1,69 +1,156 @@
-CRM Simplificado - Backend
-Tecnologias
+📌 CRM Simplificado
+🗂 Geral do Projeto
 
-Node.js + Express
+💡 Nome: CRM Simplificado
 
-JWT para autenticação
+🎯 Objetivo: Sistema para gerenciar clientes, atendimentos e usuários
 
-Banco de dados (PostgreSQL/MySQL ou MongoDB, conforme setup)
+🛠 Funcionalidades:
 
+👥 Gestão de clientes (CRUD)
 
-Setup Inicial
+📝 Gestão de atendimentos (CRUD)
 
-Instale dependências:
+🔑 Gestão de usuários com roles: ADMIN, SELLER, ATTENDANT
 
+🛡 Sistema de permissões baseado em roles
+
+📊 Dashboard e filtros dinâmicos
+
+🔐 Autenticação JWT
+
+🌗 Modo claro/escuro
+
+⚡ Tecnologias:
+
+Frontend: React, Material UI, styled-components, react-router-dom
+
+Backend: Node.js, Express, Prisma, PostgreSQL
+
+Autenticação: JWT + Roles
+
+Outras libs: bcrypt, react-toastify
+
+⚙️ Backend
+💻 Instalação
+
+Clone o repositório:
+
+git clone <REPO_URL>
+cd backend
 npm install
 
+🛠 Configuração Inicial
 
-Configure .env:
+Crie .env:
 
-PORT=4000
-DATABASE_URL=<url_do_banco>
-JWT_SECRET=Tracker2025
+DATABASE_URL="postgresql://USER:PASSWORD@HOST:PORT/DB?schema=public"
+SEED_ADMIN_EMAIL=admin@example.com
+SEED_ADMIN_PASSWORD=Admin123!
+BCRYPT_SALT=10
+JWT_SECRET="sua_chave_secreta"
 
 
-Rodando o backend:
+Rodar migrações:
 
+npx prisma migrate dev
+
+
+Criar seed inicial do admin:
+
+npx prisma db seed
+
+
+Isso criará automaticamente um usuário ADMIN.
+
+🚀 Rodar servidor
 npm run dev
 
 
-O servidor rodará em http://localhost:4000.
+Servidor disponível em: http://localhost:4000
 
-Endpoints Principais
-Usuários
 
-POST /users/register – criar usuário (ADMIN)
+🔐 Sistema de Permissões
 
-GET /users – listar usuários (ADMIN e SELLER visualização)
+ADMIN → acesso total, pode criar, editar, visualizar e deletar usuários
 
-PUT /users/:id – atualizar usuário (ADMIN)
+SELLER → apenas visualiza usuários e atendimentos
 
-DELETE /users/:id – deletar usuário (ADMIN)
+ATTENDANT → acesso restrito a atendimentos e clientes
 
-Clientes
+🖥 Frontend
+💻 Instalação
 
-GET /customers – listar clientes
+npm install
 
-POST /customers – criar cliente (ADMIN)
+🛠 Configuração Inicial
 
-PUT /customers/:id – atualizar cliente (ADMIN)
+Criar .env:
 
-DELETE /customers/:id – deletar cliente (ADMIN)
+REACT_APP_API_URL=http://localhost:4000
 
-Atendimentos
+🚀 Rodar aplicação
+npm start
 
-GET /attendances – listar atendimentos
 
-POST /attendances – criar atendimento
+Disponível em: http://localhost:3000
 
-PUT /attendances/:id – atualizar atendimento
+🧩 Estrutura de Pastas
 
-DELETE /attendances/:id – deletar atendimento (ADMIN)
+/src
 
-Sistema de Permissões
+/components → componentes reutilizáveis (Navbar, Modals)
 
-ADMIN: CRUD completo em todos os módulos
+/pages → páginas (Customers, Attendance, Admin Panel)
 
-SELLER: visualização de clientes e usuários; CRUD apenas em atendimentos
+/context → AuthContext, ThemeContext
 
-ATTENDANT: CRUD em atendimentos; não pode acessar usuários ou clientes
+/api → Axios setup
+
+/utils → helpers e tipagens
+
+⚡ Funcionalidades
+
+Navbar baseada no role do usuário
+
+Modals para criação, edição e visualização
+
+Filtros e busca em listas
+
+Notificações via Snackbar
+
+📦 Rodando o Projeto Completo
+
+Inicie o PostgreSQL
+
+Rodar Backend:
+
+npm install
+npx prisma migrate dev
+npx prisma db seed
+npm run dev
+
+
+Rodar Frontend:
+
+npm install
+npm start
+
+
+Acesse o sistema:
+
+Frontend: http://localhost:3000
+
+Backend: http://localhost:4000
+
+✅ Usuários de Teste
+
+Admin: SEED_ADMIN_EMAIL / SEED_ADMIN_PASSWORD
+
+Roles disponíveis:
+
+🛡 ADMIN → acesso total
+
+🏷 SELLER → apenas visualiza
+
+👨‍💻 ATTENDANT → atendimentos e clientes
